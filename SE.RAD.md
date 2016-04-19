@@ -48,6 +48,11 @@ Model demographic history (FastSimCoal & ABC??)
 - LFMM
 - PCAdapt
 - BayEnv/BayPass
+- TESS
+- EMMAX
+- 
+
+
 
 
 
