@@ -28,4 +28,27 @@ So the aim of this paper is two-fold
 Method: Find populations with increased nucleotide diversity - i.e. look for signals similar to hybrid zones. (detection of contact zone).
 
 
-2. 
+Model demographic history (FastSimCoal & ABC??)
+
+
+2. What is the current population structure? 
+
+- within clusters and across the gradient
+- is there a decrease in nucleotide diversity across the gradient? 
+
+  - nucleotide diversity
+  - Structure
+  - Fst
+  - AMOVA
+  - PCA
+
+
+3. Can we identify loci associated with environmental variables? 
+
+- LFMM
+- PCAdapt
+- BayEnv/BayPass
+
+
+
+
