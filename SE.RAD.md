@@ -1,4 +1,4 @@
-#SE data analsis
+#SE data analysis
 
 #Population genomic evidence for temperature adaptation in the European common frog, Rana temporaria, across a latitudinal gradient in Scandinavia. 
 
