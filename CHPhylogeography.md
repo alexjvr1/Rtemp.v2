@@ -38,9 +38,16 @@ First I need to extract the populations from the VCF data set. But the vcf file 
 
 Vcftools is useful for subsetting a vcf file: 
 
-This took a long time to run! 
+This took a long time to run! - 32min on gdcsrv2
 ```
 vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --recode --out CH.Phylo.vcf
+
+Eighth Header entry should be INFO: INFO    
+Keeping individuals in 'keep' list
+After filtering, kept 256 out of 1029 Individuals
+Outputting VCF file...
+After filtering, kept 5784222 out of a possible 5784222 Sites
+Run Time = 1865.00 seconds
 ```
 
 I'll extract all the samples that have mtDNA sequenced. 
@@ -52,18 +59,31 @@ Now that I have the data, I will run the normal SNP filtering on it:*** This is 
 
 50% genotyping rate. And MAC of 3. 
 ```
-vcftools --vcf Phylo.RAD.vcf --max-missing 0.5 --mac 3 --recode --recode-INFO-all --out s1.Phylo.RAD.vcf
+vcftools --vcf CH.Phylo.vcf.recode.vcf --max-missing 0.5 --mac 3 --recode --recode-INFO-all --out s1.Phylo.RAD.vcf
+
+
 ```
 
 Output: 
 ```
+Parameters as interpreted:
+	--vcf CH.Phylo.vcf.recode.vcf
+	--recode-INFO-all
+	--mac 3
+	--max-missing 0.5
+	--out s1.Phylo.RAD.vcf
+	--recode
 
+After filtering, kept 256 out of 256 Individuals
+Outputting VCF file...
+After filtering, kept 42827 out of a possible 5784222 Sites
+Run Time = 307.00 seconds
 ```
 
 
 And check the missingness for the individuals: 
 ```
-vcftools --vcf subset.g5mac3dp3.recode.vcf --missing-indv
+vcftools --vcf s1.Phylo.RAD.vcf.recode.vcf --missing-indv
 
 mawk '!/IN/' out.imiss | cut -f5 > totalmissing
 
