@@ -39,22 +39,14 @@ First I need to extract the populations from the VCF data set. But the vcf file 
 Bcftools is useful for subsetting a vcf file: 
 
 ```
-bgzip -c CH_6.100.vcf > CH_6.100.vcf.gz
-vcf-sort CH_6.100.vcf.gz
-tabix -fp vcf CH_6.100.vcf.gz
-
-bcftools view -S PhyloNames.txt CH_6.100.vcf.gz -o CH.Phylo.vcf
-
-vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --out Phylo.RAD.vcf
+vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --recode --out CH.Phylo.vcf
 ```
-
-Where CEUlist.txt is a list of all the that should be extracted. 
 
 I'll extract all the samples that have mtDNA sequenced. 
 
 It turns out that I don't have RAD data for all the mtDNA sequenced samples: 256/285 samples = 89.8%
 
-Now that I have the data, I will run the normal SNP filtering on it: 
+Now that I have the data, I will run the normal SNP filtering on it:*** This is before I've optimised any of the depth parameters!! 
 
 
 50% genotyping rate. And MAC of 3. 
