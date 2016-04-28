@@ -30,7 +30,7 @@ First I need to extract the populations from the VCF data set:
 
 
 ```
-vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --out Phylo.RAD.vcf --plink
+vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --out Phylo.RAD.vcf
 ```
 
 Where CEUlist.txt is a list of all the that should be extracted. 
@@ -44,7 +44,7 @@ Now that I have the data, I will run the normal SNP filtering on it:
 
 50% genotyping rate. And MAC of 3. 
 ```
-vcftools --vcf c96d6m4min50.vcf --max-missing 0.5 --mac 3 --recode --recode-INFO-all --out subset.g5mac3
+vcftools --vcf Phylo.RAD.vcf --max-missing 0.5 --mac 3 --recode --recode-INFO-all --out s1.Phylo.RAD.vcf
 ```
 
 Output: 
