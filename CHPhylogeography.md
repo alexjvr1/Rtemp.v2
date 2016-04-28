@@ -104,6 +104,9 @@ EOF
 
 Output: 
 
+[alt_txt][Fig1]
+[Fig1]:https://cloud.githubusercontent.com/assets/12142475/14905048/1814df06-0d62-11e6-9b86-d63c149b44ad.png
+
 
 
 
