@@ -5,6 +5,15 @@ I spoke to Ben Wielstra today (27 April 2016). He suggests that adding some of t
 - Hence I could publish in a higher impact journal
 - better for my CV and for the grant applications later this year. 
 
+
+Some papers to look at:
+
+doi: 10.1111/mec.13395  : secondary contact in Salmon
+
+
+
+
+
 To explore this option, I will test the ddRAD data for these popuations: 
 
 1. Structure
