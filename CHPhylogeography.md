@@ -36,8 +36,9 @@ bcftools query -l Phylogeography/CH_6.100.vcf > Phylogeography/CHallnames.txt
 
 First I need to extract the populations from the VCF data set. But the vcf file needs to be indexed first. 
 
-Bcftools is useful for subsetting a vcf file: 
+Vcftools is useful for subsetting a vcf file: 
 
+This took a long time to run! 
 ```
 vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --recode --out CH.Phylo.vcf
 ```
