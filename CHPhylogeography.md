@@ -39,6 +39,48 @@ I'll extract all the samples that have mtDNA sequenced.
 
 It turns out that I don't have RAD data for all the mtDNA sequenced samples: 256/285 samples = 89.8%
 
+Now that I have the data, I will run the normal SNP filtering on it: 
+
+
+50% genotyping rate. And MAC of 3. 
+```
+vcftools --vcf c96d6m4min50.vcf --max-missing 0.5 --mac 3 --recode --recode-INFO-all --out subset.g5mac3
+```
+
+Output: 
+```
+
+```
+
+
+And check the missingness for the individuals: 
+```
+vcftools --vcf subset.g5mac3dp3.recode.vcf --missing-indv
+
+mawk '!/IN/' out.imiss | cut -f5 > totalmissing
+
+gnuplot << \EOF 
+set terminal dumb size 120, 30
+set autoscale 
+unset label
+set title "Histogram of % missing data per individual"
+set ylabel "Number of Occurrences"
+set xlabel "% of missing data"
+#set yr [0:100000]
+binwidth=0.01
+bin(x,width)=width*floor(x/width) + binwidth/2.0
+plot 'totalmissing' using (bin( $1,binwidth)):(1.0) smooth freq with boxes
+pause -1
+EOF
+```
+
+Output: 
+
+
+
+
+
+
 
 
 
