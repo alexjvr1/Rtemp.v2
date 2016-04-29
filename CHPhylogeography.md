@@ -108,10 +108,43 @@ Output:
 [Fig1]:https://cloud.githubusercontent.com/assets/12142475/14905048/1814df06-0d62-11e6-9b86-d63c149b44ad.png
 
 
+Most of the samples have <50% missing data. 
 
 
+And if I try with --max-missing 0.8 followed by the rest of the filtering 
 
+```
+vcftools --vcf CH.Phylo.vcf.recode.vcf --max-missing 0.8 --mac 3 --recode --recode-INFO-all --out s1.Phylo.RAD.vcf
 
+Parameters as interpreted:
+	--vcf CH.Phylo.vcf.recode.vcf
+	--recode-INFO-all
+	--mac 3
+	--max-missing 0.8
+	--out s1.Phylo.RAD.0.8maxmiss.vcf
+	--recode
+
+After filtering, kept 256 out of 256 Individuals
+Outputting VCF file...
+After filtering, kept 7710 out of a possible 5784222 Sites
+Run Time = 290.00 seconds
+```
+
+![alt_txt][Fig2]
+[Fig2]:https://cloud.githubusercontent.com/assets/12142475/14905392/f4dfa4c8-0d64-11e6-83a1-00c6192074b1.png
+
+I will lose 27 individuals. Of these only wise03 is from a mixed population. (PhyloDataset.mtDNA.RAD_20160428)
+
+I will remove these individuals. (Good news is that all the brown haplotypes are still represented. 
+
+```
+vcftools --vcf s1.Phylo.RAD.0.8maxmiss.vcf.recode.vcf --remove lowDP.indiv --recode --recode-INFO-all --out subset.imiss80
+
+After filtering, kept 230 out of 256 Individuals
+Outputting VCF file...
+After filtering, kept 7710 out of a possible 7710 Sites
+Run Time = 1.00 seconds
+```
 
 
 
