@@ -147,5 +147,24 @@ Run Time = 1.00 seconds
 ```
 
 
+##Structure
 
+Structure is running on the server (GDCsrv1) and on my computer (to check the speed). K=2, 50-100
+
+Started eve 29 April 2016
+
+##PCA
+
+In R. Using the Plink input file: 
+
+
+
+
+ === S4 class genlight ===
+ 230 genotypes,  7586 binary SNPs
+ Ploidy: 2
+ 149815 (0.09 %) missing data
+ @pop: individual membership for 230 populations
+ @loc.names: labels of the SNPs
+ @other: a list containing: sex  phenotype  pat  mat 
 
