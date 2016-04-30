@@ -233,3 +233,7 @@ plot(tre, type="unrooted", use.edge.length = TRUE,
 [Fig3]:https://cloud.githubusercontent.com/assets/12142475/14938749/fc372316-0ee2-11e6-92d5-de95fb6e9264.png
 
 
+The NJ tree is too messy. I'll have to think about what to do with that. 
+
+
+
