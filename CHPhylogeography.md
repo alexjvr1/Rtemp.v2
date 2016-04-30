@@ -10,7 +10,15 @@ Some papers to look at:
 
 doi: 10.1111/mec.13395  : secondary contact in Salmon
 
+Streicher et al. 2014: cytb & RAD to look at secondary contact in polytypic barking frogs. 
 
+(i) infer phylogenetic relationships
+
+(ii) identify the timing and directionality of introgression events across distinct lineages 
+
+(iii) determine whether the more introgressed populations have higher genetic diversity (i.e. adaptive potential)
+
+(iv) 
 
 
 
@@ -168,3 +176,54 @@ In R. Using the Plink input file:
  @loc.names: labels of the SNPs
  @other: a list containing: sex  phenotype  pat  mat 
 
+
+###R: PCA for CH.Phylo
+
+```
+setwd("~/2016RADAnalysis/1_Phylo/input.files/plink")
+
+library("ade4")
+library("adegenet")
+library("pegas")
+
+CH.plink <- read.PLINK("CH.Phyl.230.7710.imiss80.plink.raw")
+CH.plink
+
+indNames(CH.plink)
+
+CH436_pop.names <- read.table("CH.Phylo.PopID.ECHN.ECHS.all.csv", header=T, quote="\"")
+CH436_pop.names.factors <- as.factor(CH436_pop.names$PopID) #and convert to a factor
+summary(CH436_pop.names)
+
+pop(CH.plink) <- (CH436_pop.names.factors) #assign population names from a text file
+pop(CH.plink)  ##and check that they are correct
+
+temp <- table(unlist(other(CH.plink)))
+barplot(temp,main="distribution of NoAlleles per locus",xlab="Number of Alleles",ylab="Number of sites",col=heat.colors(4))
+
+myFreq <- glMean(CH.plink)
+hist(myFreq, proba=T, col="gold", xlab="Allele Frequencies", main="Distribution of (2nd) allele frequencies")
+temp <- density(myFreq)
+lines(temp$x, temp$y,*1.8, lwd=3)
+
+##Pop structure
+pca1 <- glPca(CH.plink) ##This displays a barplot of the eigenvalues and asks the user for a number of retained principal components
+
+scatter(pca1, posi="bottomright") #scatter plot of PC 1& 2
+title("PCA of CH Rana temporaria, axes 1 and 2")
+
+s.class(pca1$scores, pop(CH.plink), col=colors()
+        [c(131,131,131,131,131,131,131,131,160,160,160,160,160,150,150,150,150,134,134,134,134,134,134,134)]) 
+add.scatter.eig(pca1$eig,2,1,2) abline(h=0,v=0,col="grey")
+
+myCol <- colorplot(pca1$scores,pca1$scores,transp=T,cex=4) abline(h=0,v=0,col="grey") 
+add.scatter.eig(pca1$eig[1:40],2,1,2, posi="topright", inset=.05, ratio=.3)
+
+#NJ tree
+library(ape)
+tre <- nj(dist(as.matrix(CH.plink)))
+tre
+plot(tre, type="unrooted", use.edge.length = TRUE,
+     node.pos = NULL, show.tip.label = F, show.node.label = FALSE,
+     edge.color = "black")
+```
