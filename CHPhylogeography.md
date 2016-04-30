@@ -227,3 +227,9 @@ plot(tre, type="unrooted", use.edge.length = TRUE,
      node.pos = NULL, show.tip.label = F, show.node.label = FALSE,
      edge.color = "black")
 ```
+
+
+![alt_txt][Fig2]
+[Fig2]:https://cloud.githubusercontent.com/assets/12142475/14938749/fc372316-0ee2-11e6-92d5-de95fb6e9264.png
+
+
