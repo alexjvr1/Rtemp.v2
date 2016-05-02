@@ -172,6 +172,11 @@ zip -r Results.zip Results
 ```
 And upload results to Structure Harvester to check the optimal K: 
 
+![alt_txt][Str.Harvester]
+[Str.Harvester]:https://cloud.githubusercontent.com/assets/12142475/14964239/1dabe638-105c-11e6-8782-b407575131be.png
+
+![alt_txt][Str.K23]
+[Str.K23]:
 
 
 
