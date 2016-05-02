@@ -179,6 +179,33 @@ And upload results to Structure Harvester to check the optimal K:
 [Str.K23]:https://cloud.githubusercontent.com/assets/12142475/14964249/2bcb5db6-105c-11e6-8c0d-b19abf4e473b.png
 
 
+###Set up hierarchical structure analysis with only CHS + Brown individuals. 
+
+```
+--vcf subset.imiss80.recode.vcf --keep CHS.Brown.names.txt --recode --out CHS.Brown.imiss80
+
+Parameters as interpreted:
+	--vcf subset.imiss80.recode.vcf
+	--keep CHS.Brown.names.txt
+	--out CHS.Brown.imiss80
+	--recode
+
+Keeping individuals in 'keep' list
+After filtering, kept 110 out of 230 Individuals
+Outputting VCF file...
+After filtering, kept 7710 out of a possible 7710 Sites
+Run Time = 1.00 seconds
+```
+
+Copy to mac and convert to .str format using pgdspider. 
+
+copy back to the GDCserver and start the structure runs: 
+
+```
+structure -K 1 -o /gdc_home4/alexjvr/CHcomplete/outfiles_1029/Phylogeography/StructureOnGDC/CHS.brown.50-100/CSH.Brown.K1.run1
+```
+
+
 
 
 ##PCA
