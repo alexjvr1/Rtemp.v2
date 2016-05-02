@@ -157,9 +157,23 @@ Run Time = 1.00 seconds
 
 ##Structure
 
-Structure is running on the server (GDCsrv1) and on my computer (to check the speed). K=2, 50-100
+Structure is running on the GDC server (GDCsrv1 & 2) and on my computer. 
 
-Started eve 29 April 2016
+K=1-5 x 5 runs each, 50-100
+
+Copy everything to a folder on my computer 
+
+```
+scp alexjvr@gdcsrv1.ethz.ch:/gdc_home4/alexjvr/CHcomplete/outfiles_1029/Phylogeography/StructureOnGDC/50-100/Results/* .
+
+# my data is here on the Mac: /Users/alexjvr/2016RADAnalysis/1_Phylo/Phylo.Structure/Results
+
+zip -r Results.zip Results
+```
+And upload results to Structure Harvester to check the optimal K: 
+
+
+
 
 ##PCA
 
