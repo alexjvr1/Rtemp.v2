@@ -176,7 +176,8 @@ And upload results to Structure Harvester to check the optimal K:
 [Str.Harvester]:https://cloud.githubusercontent.com/assets/12142475/14964239/1dabe638-105c-11e6-8782-b407575131be.png
 
 ![alt_txt][Str.K23]
-[Str.K23]:
+[Str.K23]:https://cloud.githubusercontent.com/assets/12142475/14964249/2bcb5db6-105c-11e6-8c0d-b19abf4e473b.png
+
 
 
 
