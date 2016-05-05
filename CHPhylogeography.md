@@ -205,7 +205,26 @@ copy back to the GDCserver and start the structure runs:
 structure -K 1 -o /gdc_home4/alexjvr/CHcomplete/outfiles_1029/Phylogeography/StructureOnGDC/CHS.brown.50-100/CSH.Brown.K1.run1
 ```
 
+![alt_txt][CHS.deltaK]
+[CHS.deltaK]:https://cloud.githubusercontent.com/assets/12142475/15059461/b5846a84-12d7-11e6-9098-983ccf04be45.png
 
+
+Q by elevation
+
+![alt_txt][CHS.elev]
+[CHS.elev]:https://cloud.githubusercontent.com/assets/12142475/15059519/00855f2a-12d8-11e6-81f6-9a488943367a.png
+
+
+Q by lat
+
+![alt_txt][CHS.alt]
+[CHS.alt]:https://cloud.githubusercontent.com/assets/12142475/15059528/0e509f02-12d8-11e6-9443-8f8de24a8d29.png
+
+
+MAP: only the CHS/Brown samples were sequenced (i.e. for pie charts where green is also present, the bar charts represent only the RAD data of the purple/brown indivs
+
+![alt_txt][MAP]
+[MAP]:https://cloud.githubusercontent.com/assets/12142475/15059539/166453e6-12d8-11e6-9d0e-e10baa7fd4cb.png
 
 
 ##PCA
