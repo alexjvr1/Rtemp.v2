@@ -6,23 +6,39 @@ I spoke to Ben Wielstra today (27 April 2016). He suggests that adding some of t
 - better for my CV and for the grant applications later this year. 
 
 
+
+
+
 Some papers to look at:
 
 doi: 10.1111/mec.13395  : secondary contact in Salmon
 
 Streicher et al. 2014: cytb & RAD to look at secondary contact in polytypic barking frogs. 
 
-(i) infer phylogenetic relationships
+(i) infer phylogeographic history of CH 
 
 (ii) identify the timing and directionality of introgression events across distinct lineages 
 
+(iii) are the contact zones geographically in the same place for mtDNA vs RAD?
+
 (iii) determine whether the more introgressed populations have higher genetic diversity (i.e. adaptive potential)
 
-(iv) 
 
 
 
 To explore this option, I will test the ddRAD data for these popuations: 
+
+#1. Diagnostic stats: 
+
+1. Global pairwise Fst of mtDNA and RADdata
+
+```
+
+```
+
+
+
+#2. Population structure
 
 1. Structure
 
@@ -152,6 +168,21 @@ After filtering, kept 230 out of 256 Individuals
 Outputting VCF file...
 After filtering, kept 7710 out of a possible 7710 Sites
 Run Time = 1.00 seconds
+```
+
+Rename the samples in vcf file: 
+
+First get a list of all the samples: 
+```
+bcftools query -l subset.imiss80.recode.vcf
+
+```
+
+copy and paste this to excel. And rename accordingly (I remove the "cat" and ".fq.trim"). Nano and paste into a new file. 
+
+Paste back: 
+```
+bcftools bcftools reheader subset.imiss80.recode.vcf -s CH.230.newnames.txt -o CH.230.Phylo.FINAL.vcf
 ```
 
 
@@ -300,6 +331,35 @@ plot(tre, type="unrooted", use.edge.length = TRUE,
 
 
 The NJ tree is too messy. I'll have to think about what to do with that. 
+
+
+
+###TESS
+
+
+
+
+##3. Comparison between the datasets
+
+###1. AMOVA mtDNA vs AMOVA RAD
+
+CHS-CHN
+
+
+
+CHS-CHN-Brown
+
+
+
+
+
+
+###2. Comparison between pair-wise Fst tables
+
+
+
+
+##4. 
 
 
 
