@@ -44,6 +44,9 @@ To explore this option, I will test the ddRAD data for these popuations:
 
 2. PCA
 
+3. TESS3
+
+
 
 This part is done on the gdc server: /gdc_home4/alexjvr/CHcomplete/outfiles_1029/Phylogeography
 
@@ -334,9 +337,69 @@ The NJ tree is too messy. I'll have to think about what to do with that.
 
 
 
-###TESS
+###TESS3
+
+R package has been released in devtools: 
+
+https://github.com/cayek/TESS3/blob/master/README.md
+
+I need to use LEA to convert my data into TESS3 format: 
+
+For this I had to upgrade R. The following link shows how to set up R-studio to use different versions of R: 
+
+https://support.rstudio.com/hc/en-us/articles/200486138-Using-Different-Versions-of-R
+
+LEA is a bioconductor package. 
+
+http://www.bioconductor.org/packages/release/bioc/html/LEA.html
 
 
+In R: 
+
+```
+source("http://bioconductor.org/biocLite.R")
+biocLite("LEA")
+
+library(LEA)
+
+setwd(/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS)
+output = vcf2geno("CH.230.Phylo.FINAL.vcf")
+```
+
+The conversion removed 124 loci. Not sure why: 
+```
+
+	- number of detected individuals:	230
+	- number of detected loci:		7586
+
+For SNP info, please check ./CH.230.Phylo.FINAL.vcfsnp.
+
+124 line(s) were removed because these are not SNPs.
+Please, check ./CH.230.Phylo.FINAL.removed file, for more informations.
+```
+
+But I will work with the dataset as is. 
+
+Now I need the .coords file, which is a file with a lat & long column for each individual (no individual names). 
+
+list all the samples in the vcf file
+```
+bcftools query -l CH.230.Phylo.FINAL.vcf > CH.230.7710.names
+```
+
+```
+nano CH.230.Phylo.Final.coords  ##paste all the coords into this file
+```
+
+To run TESS3: 
+
+The executable needs to be copied to the current directory
+```
+cp ~/Applications/TESS3-master/build/TESS3 .
+
+./TESS3 -x CH.230.Phylo.FINAL.geno -r CH.230.Phylo.FINAL.coords -K 3 
+```
+-I can be used to select a random subset of samples. But this full dataset ran in ~10sec, so probably not necessary. 
 
 
 ##3. Comparison between the datasets
