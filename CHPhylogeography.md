@@ -422,7 +422,13 @@ CHS-CHN-Brown
 
 
 
-##4. 
+##4. Contact zones
+
+Description of the contact zones: 
+
+1. Centrality/width
+
+2. Geographic position
 
 
 
