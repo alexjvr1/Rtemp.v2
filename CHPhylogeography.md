@@ -336,6 +336,13 @@ plot(tre, type="unrooted", use.edge.length = TRUE,
 The NJ tree is too messy. I'll have to think about what to do with that. 
 
 
+##DAPC
+
+```
+
+```
+
+
 
 ###TESS3
 
@@ -400,6 +407,43 @@ cp ~/Applications/TESS3-master/build/TESS3 .
 ./TESS3 -x CH.230.Phylo.FINAL.geno -r CH.230.Phylo.FINAL.coords -K 3 
 ```
 -I can be used to select a random subset of samples. But this full dataset ran in ~10sec, so probably not necessary. 
+
+
+Get ascii file from: 
+
+http://srtm.csi.cgiar.org/SELECTION/inputCoord.asp
+
+**If the code below is used, the ascii file headers all need to be changed to caps for the script to work. 
+
+Using the following code for the plot: 
+
+http://membres-timc.imag.fr/Olivier.Francois/TESS_Plot.html
+
+
+```
+###Graphic display of TESS output
+#########
+setwd("/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS")
+
+install.packages("fields")
+install.packages("RColorBrewer")
+source("MapDisplay/POPSutilities.R")
+
+Qmatrix <- read.table("CH.230.Phylo.FINAL.3.Q")
+coords <- read.table("CH.230.new.coords")
+plot(coords, pch = 19, xlab = "Longitude", ylab= "Latitude")
+#?map
+map(add = T, boundary = T, interior = T, col = "grey80")
+
+asc.raster=("srtm_38_02.asc")
+asc.raster
+grid=createGridFromAsciiRaster(asc.raster)
+constraints=getConstraintsFromAsciiRaster(asc.raster,cell_value_min=0)   ##constrains the map to the raster file size
+maps(matrix = Qmatrix, coords, grid, method = "max", main = "Ancestry coefficients", xlab = "Longitude", ylab = "Latitude")
+```
+
+
+
 
 
 ##3. Comparison between the datasets
