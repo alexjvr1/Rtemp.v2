@@ -28,11 +28,26 @@ Streicher et al. 2014: cytb & RAD to look at secondary contact in polytypic bark
 
 To explore this option, I will test the ddRAD data for these popuations: 
 
+#ddRAD dataset: 
+
+All samples sequenced for cytb for which I have ddRAD data. = 230 individuals.
+
+I'll create 2 datasets: 
+
+1. CH.Phyl.230:  Full dataset from pyRAD data
+
+2. subset.CH.Phyl:  2Mil reads per indiv (or less if less was available)
+
+
+
+
+
 #1. Diagnostic stats: 
 
 1. Global pairwise Fst of mtDNA and RADdata
 
 ```
+
 
 ```
 
@@ -187,6 +202,13 @@ Paste back:
 ```
 bcftools bcftools reheader subset.imiss80.recode.vcf -s CH.230.newnames.txt -o CH.230.Phylo.FINAL.vcf
 ```
+
+
+Based on my recent checks on the pyRAD data, I should also filter all SNPs with >0.7 observed Heterozygosity
+```
+
+```
+
 
 
 ##Structure
