@@ -42,26 +42,7 @@ I'll create 2 datasets:
 
 
 
-#1. Diagnostic stats: 
-
-1. Global pairwise Fst of mtDNA and RADdata
-
-```
-
-
-```
-
-
-
-#2. Population structure
-
-1. Structure
-
-2. PCA
-
-3. TESS3
-
-
+##Dataset
 
 This part is done on the gdc server: /gdc_home4/alexjvr/CHcomplete/outfiles_1029/Phylogeography
 
@@ -204,10 +185,78 @@ bcftools bcftools reheader subset.imiss80.recode.vcf -s CH.230.newnames.txt -o C
 ```
 
 
-Based on my recent checks on the pyRAD data, I should also filter all SNPs with >0.7 observed Heterozygosity
+Based on my recent checks on the pyRAD data, I should also filter all SNPs with >0.7 observed Heterozygosity. 
+
+I will do this in R using the PLINK file. (PLINK output plink.hwe has a very strange format - multiple spaces between columns - so I couldn't figure out how to cut a specific column using linux)
+
+In R: 
 ```
 
 ```
+Because of a problem with ~4 of the SNPs (it printed no number under A1 allele in the plink.hwe, so couldn't get read into R), I sorted everything in excel.
+
+There are only 15 SNPs with O.Het >0.6 (i.e. 0.19%) 
+
+1062975:73
+724541:81
+1344840:45
+126180:97
+1391708:85
+1000448:60
+513575:68
+472871:75
+229541:28
+1202593:51
+371437:60
+888865:72
+959427:119
+280931:28
+
+Remove with plink on mac (1_Phylo/input.files/plink/)
+```
+nano SNPstoexclude.txt
+
+plink --file CH.Phyl.230.7710.imiss80 --exclude SNPstoexclude.txt --recodeA --out CHPhylFINAL
+```
+
+Final dataset: 
+
+230 individuals
+
+7572 SNPs 
+
+0.914192 Genotyping rate
+
+
+
+#1. Diagnostic stats: 
+
+1. Global pairwise Fst of mtDNA and RADdata
+
+Use Adegenet. 
+
+I want
+
+1. global pairwise Fst
+
+2. Fst between populations
+
+```
+
+
+```
+
+
+
+#2. Population structure
+
+1. Structure
+
+2. DAPC
+
+3. TESS3
+
+4. sPCA 
 
 
 
@@ -360,9 +409,28 @@ The NJ tree is too messy. I'll have to think about what to do with that.
 
 ##DAPC
 
-```
+Var(all) = Var(withingroups) + Var(betweengroups)
+
+DAPC optimises Var(B) while minimising Var(A)
+
+First convert data into Principal components, and then use a representative subset of these: 
+
+Adegenet tutorial suggests
+
+Use the Genlight object Plink 1
 
 ```
+grp <- find.clusters(Plink1, max.n.clust=100)
+```
+This produces a graph with the variance explained by the different PCA components: 
+
+![alt_txt][PCA.fig]
+[PCA.fig]:https://cloud.githubusercontent.com/assets/12142475/15434929/4ed4f7ca-1e6e-11e6-9e59-c750ce5a7f20.png
+
+I'm keeping all 200 components to calculate the BIC (i.e. most likely K)
+
+![alt_txt][BIC]
+[BIC]:https://cloud.githubusercontent.com/assets/12142475/15434930/4ed63ef0-1e6e-11e6-809b-b2adae0142b1.png
 
 
 
