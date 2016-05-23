@@ -512,6 +512,21 @@ cp ~/Applications/TESS3-master/build/TESS3 .
 -i = max nr of iterations. (default = 200)
 
 
+Min-entropy graph
+
+![alt_txt][All.entropy]
+[All.entropy]:https://cloud.githubusercontent.com/assets/12142475/15485793/29eaae84-20f6-11e6-860b-59a3c103a675.png
+
+
+Tess3 graph for K=2 and K=3
+
+![alt_txt][All.K2]
+[All.K2]:https://cloud.githubusercontent.com/assets/12142475/15486037/a4f48d2e-20f7-11e6-83d4-1a8391ada4dc.png
+
+![alt_txt][All.K3]
+[All.K3]:https://cloud.githubusercontent.com/assets/12142475/15486038/a4fd5940-20f7-11e6-8885-df5f41892540.png
+
+
 ###TESS3 with a subset of the data: CHS + Brown genotypes only
 
 First I need to select these individuals from the vcf file: 
@@ -567,6 +582,20 @@ http://membres-timc.imag.fr/Olivier.Francois/TESS_Plot.html
 
 
 ```
+####################################
+######Graph of cross-entropy scores
+
+setwd("/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS")
+library(ggplot2)
+
+CHS.entropy <- read.csv("Cross-entropy.scores.CHS.Brown.csv")
+CHS.entropy <- as.data.frame(CHS.entropy)
+CHS.entropy
+
+ggplot(CHS.entropy, aes(x=CHS.entropy$K, y=CHS.entropy$Cross.entropy)) + geom_point(shape=1) + ggtitle("Cross-entropy for CHS subset") + ylab("Cross-entropy") + xlab("K")
+
+
+
 ###Graphic display of TESS output
 #########
 setwd("/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS")
