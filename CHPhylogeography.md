@@ -415,7 +415,7 @@ First convert data into Principal components, and then use a representative subs
 
 Adegenet tutorial suggests
 
-Use the Genlight object Plink 1
+Use the Genlight object Plink1
 
 ```
 grp <- find.clusters(Plink1, max.n.clust=100)
@@ -631,6 +631,9 @@ CHS-CHN
 
 CHS-CHN-Brown
 
+
+
+###sPCA
 
 
 
