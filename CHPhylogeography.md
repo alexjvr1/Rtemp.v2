@@ -501,9 +501,16 @@ The executable needs to be copied to the current directory
 ```
 cp ~/Applications/TESS3-master/build/TESS3 .
 
-./TESS3 -x CH.230.Phylo.FINAL.geno -r CH.230.Phylo.FINAL.coords -K 3 
+./TESS3 -x CH.230.Phylo.FINAL.geno -r CH.230.Phylo.FINAL.coords -K 1 -q K1.1.Q -g K1.1.G -f K1.1.Fst -y K1.1.sum -c 0.05
 ```
 -I can be used to select a random subset of samples. But this full dataset ran in ~10sec, so probably not necessary. 
+
+-y = least-squares criterion
+
+-c = percentage of the masked genotypes. (0.05 by default). If this is set, the cross-entropy criterion is calculated. 
+
+-i = max nr of iterations. (default = 200)
+
 
 
 Get ascii file from: 
@@ -515,6 +522,9 @@ http://srtm.csi.cgiar.org/SELECTION/inputCoord.asp
 Using the following code for the plot: 
 
 http://membres-timc.imag.fr/Olivier.Francois/TESS_Plot.html
+
+
+
 
 
 ```
