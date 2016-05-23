@@ -512,6 +512,45 @@ cp ~/Applications/TESS3-master/build/TESS3 .
 -i = max nr of iterations. (default = 200)
 
 
+###TESS3 with a subset of the data: CHS + Brown genotypes only
+
+First I need to select these individuals from the vcf file: 
+
+```
+vcftools --vcf results.Alldata/CH.230.Phylo.FINAL.vcf --keep samples.brownCHS --recode --recode-INFO-all --out CHS.Brown.Phylo.vcf
+```
+
+and then convert to TESS3 input using R: (Use R in command line. This is R 3.2.5)
+```
+source("http://bioconductor.org/biocLite.R")
+biocLite("LEA")
+
+library(LEA)
+
+setwd(/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS)
+output = vcf2geno("CHS.Brown.Phylo.vcf.recode.vcf")
+```
+Run TESS3 for K1-10 x5
+```
+cp ~/Applications/TESS3-master/build/TESS3 .
+
+./TESS3 -x CHS.Brown.Phylo.vcf.recode.vcf.geno -r CHS.Brown.coords -K 1 -q K1.1.Q -g K1.1.G -f K1.1.Fst -y K1.1.sum -c 0.05
+```
+
+From the Min-Entropy graph, K = 2 
+
+I interpret this as the biggest change in cross-entropy scores, as they do in this tutorial: http://membres-timc.imag.fr/Olivier.Francois/tutoRstructure.pdf
+
+
+![alt_txt][CHS.cross.entropy]
+[CHS.cross.entropy]:https://cloud.githubusercontent.com/assets/12142475/15485192/c477305c-20f2-11e6-9994-e27f5b04281e.png
+
+
+And the TESS3 Figure for K=2: 
+
+![alt_txt][CHS.K2]
+[CHS.K2]:https://cloud.githubusercontent.com/assets/12142475/15485345/83e9be1e-20f3-11e6-9f0b-90b4679709a2.png
+
 
 Get ascii file from: 
 
