@@ -80,11 +80,9 @@ It turns out that I don't have RAD data for all the mtDNA sequenced samples: 256
 Now that I have the data, I will run the normal SNP filtering on it:*** This is before I've optimised any of the depth parameters!! 
 
 
-50% genotyping rate. And MAC of 3. 
+50% genotyping rate. And MAC of 3. (across 230 indivs = 3/460 = 0.65%) - I should probably increase this! Rather use a MAF of 1%
 ```
 vcftools --vcf CH.Phylo.vcf.recode.vcf --max-missing 0.5 --mac 3 --recode --recode-INFO-all --out s1.Phylo.RAD.vcf
-
-
 ```
 
 Output: 
@@ -433,8 +431,17 @@ I'm keeping all 200 components to calculate the BIC (i.e. most likely K)
 [BIC]:https://cloud.githubusercontent.com/assets/12142475/15434930/4ed63ef0-1e6e-11e6-809b-b2adae0142b1.png
 
 
+Because of the distribution of PCs, I have to choose a large number of PCs to explain the data (>100). This leads to overfitting of the model. The results obtained here are meaningless. How do I deal with this problem??
+
 
 ###TESS3
+
+
+TESS3 uses a new method to infer ancestry: Geographically constrained least-squares estimation of ancestry coefficients.  
+http://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12471/epdf
+
+K is chosen by evaluating the cross-entropy criterion for each K. This method finds the minimum number of "bits" or samples from a normal probability distribution (p) that can predict a non-normal probability distribution (q). So the smaller this number is, the better the K. 
+
 
 R package has been released in devtools: 
 
