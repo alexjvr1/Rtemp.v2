@@ -650,9 +650,24 @@ I have to test the following things:
 **http://www.genetics.org/content/genetics/196/4/973.full.pdf
 
 
-1. Compare model-free Structure (fastStructure) to TESS3
+##1. Compare model-free Structure (sNMF) to TESS3
+ 
+These results are much more similar to the TESS3 output. Importantly, it looks like the cross-entropy scores suggest K=3 as the most likely: 
 
-2. In TESS3, test the effect of the alpha parameter (normalised regularisation parameter; controls the geographic regularity of the ancestry estimates). 
+alpha 10
+
+![alt_txt][alpha10]
+[alpha10]:https://cloud.githubusercontent.com/assets/12142475/15520537/d2572938-21bb-11e6-9398-4e69ed43b276.png
+
+alpha 100
+
+![alt_txt][alpha100]
+[alpha100]:https://cloud.githubusercontent.com/assets/12142475/15520538/d257afd4-21bb-11e6-9d6b-fc790266298e.png
+
+
+
+
+##2. In TESS3, test the effect of the alpha parameter (normalised regularisation parameter; controls the geographic regularity of the ancestry estimates). 
 
 From Frichot et al 2014, alpha is optimised after K is chosen (from runs with alpha ~0)
 
@@ -660,8 +675,14 @@ So I will rerun TESS3 for K=2 for the following alpha:
 
 1, 10, 50, 100, 500, 1000
 
-And compare the cross-entropy scores. 
+And compare the cross-entropy scores. Alpha minises cross-entropy scores at alpha=1
 
+
+![alt_txt][alpha.opt]
+[alpha.opt]:https://cloud.githubusercontent.com/assets/12142475/15520474/80296892-21bb-11e6-9abc-9819c5414ab3.png
+
+
+#####
 
 
 
