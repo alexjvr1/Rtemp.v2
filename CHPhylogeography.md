@@ -617,7 +617,28 @@ constraints=getConstraintsFromAsciiRaster(asc.raster,cell_value_min=0)   ##const
 maps(matrix = Qmatrix, coords, grid, method = "max", main = "Ancestry coefficients", xlab = "Longitude", ylab = "Latitude")
 ```
 
+###Hybrid Index: 
 
+Choosing parents: 
+
+I wanted to choose parents based on 1. mtDNA haplotype, 2. Q>0.9 based on Structure and TESS3. 
+
+I got the following results: 
+
+
+|:--:|:--:|:--:|:--:|
+|Dataset|Parent|mtDNA+Str|+TESS3|
+|All|ParentS|27|27|
+|All|ParentN|14|13|
+|CHS|ParentBrown|9|4|
+|CHS|ParentCHS|3|2|
+
+
+![alt_txt][tessALL]
+[tessALL]:https://cloud.githubusercontent.com/assets/12142475/15514521/4e7ddff2-219e-11e6-9eca-129932b7df26.png
+
+![alt_txt][tessCHS]
+[tessCHS]:https://cloud.githubusercontent.com/assets/12142475/15514522/4e7fd334-219e-11e6-9514-c9ae3e03ec1b.png
 
 
 
