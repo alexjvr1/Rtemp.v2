@@ -634,11 +634,24 @@ I got the following results:
 |CHS|ParentCHS|3|2|
 
 
+It seems like the geographic prior makes a big difference in the population assignment. 
 ![alt_txt][tessALL]
 [tessALL]:https://cloud.githubusercontent.com/assets/12142475/15514521/4e7ddff2-219e-11e6-9eca-129932b7df26.png
 
 ![alt_txt][tessCHS]
-[tessCHS]:https://cloud.githubusercontent.com/assets/12142475/15514522/4e7fd334-219e-11e6-9514-c9ae3e03ec1b.png
+[tessCHS]:https://cloud.githubusercontent.com/assets/12142475/15514580/959fb658-219e-11e6-8a65-032fd6c2e326.png
+
+
+I have to test the following things: 
+
+**NB reference
+**Frichot et al. 2014 Fast and efficient estimation of indivdiual ancestry coefficients
+**http://www.genetics.org/content/genetics/196/4/973.full.pdf
+
+
+1. Compare model-free Structure (fastStructure) to TESS3
+
+2. In TESS3, test the effect of the alpha parameter (normalised regularisation parameter; controls the geographic regularity of the ancestry estimates). 
 
 
 
