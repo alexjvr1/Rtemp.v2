@@ -654,6 +654,15 @@ I have to test the following things:
 
 2. In TESS3, test the effect of the alpha parameter (normalised regularisation parameter; controls the geographic regularity of the ancestry estimates). 
 
+From Frichot et al 2014, alpha is optimised after K is chosen (from runs with alpha ~0)
+
+So I will rerun TESS3 for K=2 for the following alpha: 
+
+1, 10, 50, 100, 500, 1000
+
+And compare the cross-entropy scores. 
+
+
 
 
 ##3. Comparison between the datasets
