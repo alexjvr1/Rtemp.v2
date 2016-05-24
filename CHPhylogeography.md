@@ -626,8 +626,9 @@ I wanted to choose parents based on 1. mtDNA haplotype, 2. Q>0.9 based on Struct
 I got the following results: 
 
 
-|:--:|:--:|:--:|:--:|
+
 |Dataset|Parent|mtDNA+Str|+TESS3|
+|:--:|:--:|:--:|:--:|
 |All|ParentS|27|27|
 |All|ParentN|14|13|
 |CHS|ParentBrown|9|4|
