@@ -650,7 +650,10 @@ I have to test the following things:
 **http://www.genetics.org/content/genetics/196/4/973.full.pdf
 
 
-##1. Compare model-free Structure (sNMF) to TESS3
+####1. Compare model-free Structure (sNMF) to TESS3
+ 
+Using this tutorial: http://membres-timc.imag.fr/Olivier.Francois/tutoRstructure.pdf
+
  
 These results are much more similar to the TESS3 output. Importantly, it looks like the cross-entropy scores suggest K=3 as the most likely: 
 
@@ -667,7 +670,7 @@ alpha 100
 
 
 
-##2. In TESS3, test the effect of the alpha parameter (normalised regularisation parameter; controls the geographic regularity of the ancestry estimates). 
+####2. In TESS3, test the effect of the alpha parameter (normalised regularisation parameter; controls the geographic regularity of the ancestry estimates). 
 
 From Frichot et al 2014, alpha is optimised after K is chosen (from runs with alpha ~0)
 
@@ -682,7 +685,6 @@ And compare the cross-entropy scores. Alpha minises cross-entropy scores at alph
 [alpha.opt]:https://cloud.githubusercontent.com/assets/12142475/15520474/80296892-21bb-11e6-9abc-9819c5414ab3.png
 
 
-#####
 
 
 
@@ -710,6 +712,108 @@ CHS-CHN-Brown
 
 
 ##4. Contact zones
+
+mtDNA described two contact zones, the most extensive being in the East of CH. 
+
+###Geographic cline
+
+A geographic cline analysis is used to describe the geographic position and extent of a contact zone. 
+
+Here I will compare the Eastern cline for mtDNA vs RAD data
+
+1. Data needs to be collapsed into 1D data along a straight line. If the actual contact zone is broad, or unclear, the straight-line distance can be calculated from the northern/southern/ or central point. 
+
+Transect from GB to Zurich site. Calculate straight line distance between site and this line using "haversine" method. (www.movable-type.co.uk/scripts/latlong.html.) 
+
+2. Model cline shape using Hzar package in R
+
+
+For the Clinal analyses, I will select populations along a straight line that transects the hybrid zone from North to South. Only these populations will be used for the analyses. 
+
+1. Use sNMF and TESS3 to calculate K & assignment probabilities
+
+2. Compare these resutls using CLUMPP
+
+3. Use CHN & CHS parents as indivs with mtDNA + Q>0.9 assignment to the appropriate TESS/sNMF cluster. 
+
+4. Calculate hybrid index of individuals using Introgress in R. 
+
+5. 
+
+###Genomic cline
+
+####1. Subset data from EAST populations + N + GB (parent pops)
+
+
+```
+bcftools query -l Phylogeography/CH_6.100.vcf > Phylogeography/CHallnames.txt 
+
+nano EAST.names
+```
+
+```
+vcftools --vcf CH.230.Phylo.FINAL.vcf --keep EAST.names --recode --recode-INFO-all --out EAST
+```
+
+and then convert to TESS3 input using R: (Use R in command line. This is R 3.2.5)
+```
+source("http://bioconductor.org/biocLite.R")
+biocLite("LEA")
+
+library(LEA)
+
+setwd("/Users/alexjvr/2016RADAnalysis/1_Phylo/GenomicClines/")
+output = vcf2geno("EAST.recode.vcf")
+```
+
+118 individuals
+
+7586 individuals
+
+
+####2. Use sNMF and TESS3 to calculate K & assignment probabilities (in LEA)
+
+```
+obj.east = snmf("EAST.recode.geno", K = 1:10, ploidy = 2, entropy=T, alpha=100, project="new")
+plot(obj.east, col="blue4", cex=1.4, pch=19)
+```
+I tested alpha 0.001 (default), 1, 100, 1000. Minimal cross-entropy ~0.34, but lowest for lowers alpha. 
+
+sNMF
+
+![alt_txt][EAST.snmf]
+[EAST.snmf]:https://cloud.githubusercontent.com/assets/12142475/15525365/92632e76-21de-11e6-856c-31a0122f57c1.png
+
+K = 2, alpha 0.001
+
+
+TESS3
+
+```
+cp ~/Applications/TESS3-master/build/TESS3 .
+
+./TESS3 -x EAST.recode.geno -r EAST.coords -K 1 -q K1.1.Q -g K1.1.G -f K1.1.Fst -y K1.1.sum -c 0.05
+```
+
+cross-entropy scores
+
+![alt_txt][EAST.tess]
+[EAST.tess]:https://cloud.githubusercontent.com/assets/12142475/15525905/ac857f44-21e2-11e6-80c6-b4ed9edc59ad.png
+
+
+
+
+####3. Use CHN & CHS parents as indivs with mtDNA + Q>0.9 assignment to the appropriate TESS/sNMF cluster. 
+
+
+
+
+
+####4. Calculate hybrid index of individuals using Introgress in R. 
+
+
+
+
 
 Description of the contact zones: 
 
