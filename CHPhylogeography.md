@@ -24,7 +24,21 @@ Streicher et al. 2014: cytb & RAD to look at secondary contact in polytypic bark
 (iii) determine whether the more introgressed populations have higher genetic diversity (i.e. adaptive potential)
 
 
+Aim: 
 
+We usually assume higher genetic diversity with secondary contact, which could be associated with adaptation. 
+
+Here we aim to find loci from secondary contact that may be important for adaptation across the Alps. 
+
+1. determine secondary contact zone & date based on mtDNA
+
+2. Compare with secondary contact zone 
+
+Geographic cline analysis: 
+
+Genomic cline analysis: 
+
+Using the combination, 
 
 To explore this option, I will test the ddRAD data for these popuations: 
 
@@ -37,7 +51,73 @@ I'll create 2 datasets:
 1. CH.Phyl.230:  Full dataset from pyRAD data
 
 2. subset.CH.Phyl:  2Mil reads per indiv (or less if less was available)
+	samples with <2M reads: apla01, 
 
+				bach04, bach08
+				
+				bela 06
+				
+				bide01, bide03
+				
+				bnnp01
+				bnnp10
+				
+				buel01
+				
+				cava01, cava07
+				
+				egel01cat
+				
+				flue08
+				
+				forn01
+				
+				fuor04
+				
+				gdwe01
+				
+				gott05
+				
+				grma02, grma03, grma04, grma05
+				
+				grsh03
+				
+				gruu04
+				
+				hdns05
+				
+				jagg05
+				
+				mart03-05
+				
+				prad03, prad12
+				
+				rotc02
+				
+				rusc06
+				
+				sali04,06
+				
+				saxm01, 11
+				
+				seji08
+				
+				shwe01, 02
+				
+				siec08
+				
+				star09
+				
+				stir04cat
+				
+				tana10
+				
+				trim04
+				
+				vilt02,03
+				
+				wise04
+				
 
 
 
@@ -238,6 +318,10 @@ I want
 1. global pairwise Fst
 
 2. Fst between populations
+
+Data: 
+
+I subsampled the data to include 
 
 ```
 
