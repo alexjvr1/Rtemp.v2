@@ -517,6 +517,12 @@ I'm keeping all 200 components to calculate the BIC (i.e. most likely K)
 
 Because of the distribution of PCs, I have to choose a large number of PCs to explain the data (>100). This leads to overfitting of the model. The results obtained here are meaningless. How do I deal with this problem??
 
+I had a look at this paper:
+
+http://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-015-1638-6
+
+They chose 60 PCs that explains 40% of the variance in order to avoid overfitting. 
+
 
 ###TESS3
 
