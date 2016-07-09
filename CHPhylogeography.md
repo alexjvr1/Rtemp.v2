@@ -321,10 +321,14 @@ I want
 
 Data: 
 
-I subsampled the data to include 
 
+Convert the genlight object to genind
 ```
-
+x.mat <- as.matrix(x) # x is a genlight object
+x.mat[x.mat == 0] <- "1/1" # homozygote reference
+x.mat[x.mat == 1] <- "1/2" # heterozygote
+x.mat[x.mat == 2] <- "2/2" # homozygote alternate
+x.gid <- df2genind(x, sep = "/", ploidy = 2)
 
 ```
 
