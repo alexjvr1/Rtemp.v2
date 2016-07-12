@@ -263,6 +263,8 @@ bcftools bcftools reheader subset.imiss80.recode.vcf -s CH.230.newnames.txt -o C
 ```
 
 
+
+
 Based on my recent checks on the pyRAD data, I should also filter all SNPs with >0.7 observed Heterozygosity. 
 
 I will do this in R using the PLINK file. (PLINK output plink.hwe has a very strange format - multiple spaces between columns - so I couldn't figure out how to cut a specific column using linux)
@@ -345,8 +347,81 @@ x.gid <- df2genind(x, sep = "/", ploidy = 2)
 4. sPCA 
 
 
+##Input file
+
+Since most/all population structure analyses assume no linkage disequilibrium between loci, I will filter to include only single SNPs per locus. 
+
+This is done automatically in the Structure output from PyRAD (it randomly writes a single SNP from each locus to the .str input file). But I still need to do this manually when I'm using my own vcf file. 
+
+```
+vcftools --vcf CH.230.Phylo.FINAL.vcf --thin 500 --recode --recode-INFO-all --out CH.230.Phylo.Final.thin
+
+After filtering, kept 230 out of 230 Individuals
+Outputting VCF file...
+After filtering, kept 2771 out of a possible 7710 Sites
+Run Time = 0.00 seconds
+
+mv CH.230.Phylo.Final.thin.recode.vcf CH.230.2771.FINAL.thin.vcf
+```
+
+So this dramatically decreased the number of SNPs in the dataset! 
+
+Determine the Observed Heterozygosity of this new file, and filter for Ho >0.7
+
+1. convert to .plink
+
+2. run hwe test
+
+3. move to mac
+
+4. use excel to sort columns
+
+5. create list of SNPs to remove
+
+6. remove with Plink
+
+```
+vcftools --vcf CH.230.2771.FINAL.thin.vcf --out CH.Phyl.230.2771 --plink
+plink --file CH.Phyl.230.2771 --out CH.Phyl.230.2771.plink --recodeA
+
+
+plink --file CH.Phyl.230.2771 --hardy
+
+scp -r alexjvr@gdcsrv1.ethz.ch:/gdc_home4/alexjvr/CH.Phylogenomics/CH.Phyl.230/CH.230.2771.thinned /Users/alexjvr/2016RADAnalysis/1_Phylo/input.files/CH.230.2734.THINNED
+```
+
+This leaves only 5 SNPs with Ho > 0.7: 
+
+```
+nano SNPstoexclude.txt
+
+	229541:28
+
+	472871:75
+
+	513575:68
+
+	126180:97
+
+	1344840:45
+
+plink --file CH.Phyl.230.2771 --exclude SNPstoexclude.txt --recodeA --out CH.Phyl.THINNED.Final
+```
+
+Final dataset
+
+230 individuals
+
+2729 loci
+
+0.914 genotyping rate
+
+
 
 ##Structure
+
+Convert input to Structure format using pgdSpider
+
 
 Structure is running on the GDC server (GDCsrv1 & 2) and on my computer. 
 
