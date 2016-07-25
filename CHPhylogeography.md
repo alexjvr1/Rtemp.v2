@@ -338,13 +338,47 @@ x.gid <- df2genind(x, sep = "/", ploidy = 2)
 
 #2. Population structure
 
-1. Structure
+###Non-geographic
+	
+	Model-based
 
-2. DAPC
+	1. fastStructure
+	
+	2. Admixture
+	
+	3. Structure (not tested due to lengthy run times) 
+ 
+	
+	Model-free
 
-3. TESS3
+	1. DAPC
 
-4. sPCA 
+	2. sNMF
+
+	3. PCA
+
+	Basic global population structure. 
+	Assumes no LD between loci, so filter for single SNP per locus. 
+
+###Geographic prior
+
+	Model
+
+	1. TESS v <3  - not tested
+	
+	Model-free
+	
+	1. sPCA
+
+	2. TESS3
+
+###Model comparison
+
+Per individual: Differences in individual Q-values between clustering algorithms were assessed using the Mann-Whitney-Wilcoxon test (Wilcoxon 1945; Mann & Whitney 1947). 
+
+Overall: Genetic structure inferred by different clustering methods were compared using a Pearson's correlation coefficient (r). 
+
+Bonferroni correction for multiple tests was applied (Weir 1996). 
 
 
 ##Input file
@@ -418,10 +452,331 @@ Final dataset
 
 
 
-##Structure
+##Geographic Population Structure
 
-Convert input to Structure format using pgdSpider
+###1. fastStructure
 
+Convert input to Structure format using pgdSpider. Choose the specific fastStructure format. And change marker type to SNPs. Everything else should be left as is. All the columns are in the PLINK files. 
+
+
+fastStructure can be run from the Applications folder, or specify the path in bash: 
+
+```
+python structure.py -K 4 --format=str --input=CH.230.2729 --output=CH23.2729/CH.230.2729_K4.2
+```
+
+I haven't figured out how to write a script to loop through fastStructure, but change the output file for each run. I.e. I have to manually run K 1-5 x 10 runs. The runs take just a few seconds each. 
+
+
+
+
+##PCA
+
+In R. Using the Plink input file: 
+
+
+
+
+ === S4 class genlight ===
+ 230 genotypes,  7586 binary SNPs
+ Ploidy: 2
+ 149815 (0.09 %) missing data
+ @pop: individual membership for 230 populations
+ @loc.names: labels of the SNPs
+ @other: a list containing: sex  phenotype  pat  mat 
+
+
+###R: PCA for CH.Phylo
+
+```
+setwd("~/2016RADAnalysis/1_Phylo/input.files/plink")
+
+library("ade4")
+library("adegenet")
+library("pegas")
+
+CH.plink <- read.PLINK("CH.Phyl.230.7710.imiss80.plink.raw")
+CH.plink
+
+indNames(CH.plink)
+
+CH436_pop.names <- read.table("CH.Phylo.PopID.ECHN.ECHS.all.csv", header=T, quote="\"")
+CH436_pop.names.factors <- as.factor(CH436_pop.names$PopID) #and convert to a factor
+summary(CH436_pop.names)
+
+pop(CH.plink) <- (CH436_pop.names.factors) #assign population names from a text file
+pop(CH.plink)  ##and check that they are correct
+
+temp <- table(unlist(other(CH.plink)))
+barplot(temp,main="distribution of NoAlleles per locus",xlab="Number of Alleles",ylab="Number of sites",col=heat.colors(4))
+
+myFreq <- glMean(CH.plink)
+hist(myFreq, proba=T, col="gold", xlab="Allele Frequencies", main="Distribution of (2nd) allele frequencies")
+temp <- density(myFreq)
+lines(temp$x, temp$y,*1.8, lwd=3)
+
+##Pop structure
+pca1 <- glPca(CH.plink) ##This displays a barplot of the eigenvalues and asks the user for a number of retained principal components
+
+scatter(pca1, posi="bottomright") #scatter plot of PC 1& 2
+title("PCA of CH Rana temporaria, axes 1 and 2")
+
+s.class(pca1$scores, pop(CH.plink), col=colors()
+        [c(131,131,131,131,131,131,131,131,160,160,160,160,160,150,150,150,150,134,134,134,134,134,134,134)]) 
+add.scatter.eig(pca1$eig,2,1,2) abline(h=0,v=0,col="grey")
+
+myCol <- colorplot(pca1$scores,pca1$scores,transp=T,cex=4) abline(h=0,v=0,col="grey") 
+add.scatter.eig(pca1$eig[1:40],2,1,2, posi="topright", inset=.05, ratio=.3)
+
+#NJ tree
+library(ape)
+tre <- nj(dist(as.matrix(CH.plink)))
+tre
+plot(tre, type="unrooted", use.edge.length = TRUE,
+     node.pos = NULL, show.tip.label = F, show.node.label = FALSE,
+     edge.color = "black")
+```
+
+
+![alt_txt][Fig3]
+[Fig3]:https://cloud.githubusercontent.com/assets/12142475/14938749/fc372316-0ee2-11e6-92d5-de95fb6e9264.png
+
+
+The NJ tree is too messy. I'll have to think about what to do with that. 
+
+
+##DAPC
+
+Var(all) = Var(withingroups) + Var(betweengroups)
+
+DAPC optimises Var(B) while minimising Var(A)
+
+First convert data into Principal components, and then use a representative subset of these: 
+
+Adegenet tutorial suggests
+
+Use the Genlight object Plink1
+
+```
+grp <- find.clusters(Plink1, max.n.clust=100)
+```
+This produces a graph with the variance explained by the different PCA components: 
+
+![alt_txt][PCA.fig]
+[PCA.fig]:https://cloud.githubusercontent.com/assets/12142475/15434929/4ed4f7ca-1e6e-11e6-9e59-c750ce5a7f20.png
+
+I'm keeping all 200 components to calculate the BIC (i.e. most likely K)
+
+![alt_txt][BIC]
+[BIC]:https://cloud.githubusercontent.com/assets/12142475/15434930/4ed63ef0-1e6e-11e6-809b-b2adae0142b1.png
+
+
+Because of the distribution of PCs, I have to choose a large number of PCs to explain the data (>100). This leads to overfitting of the model. The results obtained here are meaningless. How do I deal with this problem??
+
+I had a look at this paper:
+
+http://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-015-1638-6
+
+They chose 60 PCs that explains 40% of the variance in order to avoid overfitting. 
+
+
+###TESS3
+
+
+TESS3 uses a new method to infer ancestry: Geographically constrained least-squares estimation of ancestry coefficients.  
+http://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12471/epdf
+
+K is chosen by evaluating the cross-entropy criterion for each K. This method finds the minimum number of "bits" or samples from a normal probability distribution (p) that can predict a non-normal probability distribution (q). So the smaller this number is, the better the K. 
+
+
+R package has been released in devtools: 
+
+https://github.com/cayek/TESS3/blob/master/README.md
+
+I need to use LEA to convert my data into TESS3 format: 
+
+For this I had to upgrade R. The following link shows how to set up R-studio to use different versions of R: 
+
+https://support.rstudio.com/hc/en-us/articles/200486138-Using-Different-Versions-of-R
+
+LEA is a bioconductor package. 
+
+http://www.bioconductor.org/packages/release/bioc/html/LEA.html
+
+
+In R: 
+
+```
+source("http://bioconductor.org/biocLite.R")
+biocLite("LEA")
+
+library(LEA)
+
+setwd(/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS)
+output = vcf2geno("CH.230.Phylo.FINAL.vcf")
+```
+
+The conversion removed 124 loci. Not sure why: 
+```
+
+	- number of detected individuals:	230
+	- number of detected loci:		7586
+
+For SNP info, please check ./CH.230.Phylo.FINAL.vcfsnp.
+
+124 line(s) were removed because these are not SNPs.
+Please, check ./CH.230.Phylo.FINAL.removed file, for more informations.
+```
+
+But I will work with the dataset as is. 
+
+Now I need the .coords file, which is a file with a lat & long column for each individual (no individual names). 
+
+list all the samples in the vcf file
+```
+bcftools query -l CH.230.Phylo.FINAL.vcf > CH.230.7710.names
+```
+
+```
+nano CH.230.Phylo.Final.coords  ##paste all the coords into this file
+```
+
+To run TESS3: 
+
+The executable needs to be copied to the current directory
+```
+cp ~/Applications/TESS3-master/build/TESS3 .
+
+./TESS3 -x CH.230.Phylo.FINAL.geno -r CH.230.Phylo.FINAL.coords -K 1 -q K1.1.Q -g K1.1.G -f K1.1.Fst -y K1.1.sum -c 0.05
+```
+-I can be used to select a random subset of samples. But this full dataset ran in ~10sec, so probably not necessary. 
+
+-y = least-squares criterion
+
+-c = percentage of the masked genotypes. (0.05 by default). If this is set, the cross-entropy criterion is calculated. 
+
+-i = max nr of iterations. (default = 200)
+
+
+Min-entropy graph
+
+![alt_txt][All.entropy]
+[All.entropy]:https://cloud.githubusercontent.com/assets/12142475/15485793/29eaae84-20f6-11e6-860b-59a3c103a675.png
+
+
+Tess3 graph for K=2 and K=3
+
+![alt_txt][All.K2]
+[All.K2]:https://cloud.githubusercontent.com/assets/12142475/15486037/a4f48d2e-20f7-11e6-83d4-1a8391ada4dc.png
+
+![alt_txt][All.K3]
+[All.K3]:https://cloud.githubusercontent.com/assets/12142475/15486038/a4fd5940-20f7-11e6-8885-df5f41892540.png
+
+
+###TESS3 with a subset of the data: CHS + Brown genotypes only
+
+First I need to select these individuals from the vcf file: 
+
+```
+vcftools --vcf results.Alldata/CH.230.Phylo.FINAL.vcf --keep samples.brownCHS --recode --recode-INFO-all --out CHS.Brown.Phylo.vcf
+```
+
+and then convert to TESS3 input using R: (Use R in command line. This is R 3.2.5)
+```
+source("http://bioconductor.org/biocLite.R")
+biocLite("LEA")
+
+library(LEA)
+
+setwd(/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS)
+output = vcf2geno("CHS.Brown.Phylo.vcf.recode.vcf")
+```
+Run TESS3 for K1-10 x5
+```
+cp ~/Applications/TESS3-master/build/TESS3 .
+
+./TESS3 -x CHS.Brown.Phylo.vcf.recode.vcf.geno -r CHS.Brown.coords -K 1 -q K1.1.Q -g K1.1.G -f K1.1.Fst -y K1.1.sum -c 0.05
+```
+
+From the Min-Entropy graph, K = 2 
+
+I interpret this as the biggest change in cross-entropy scores, as they do in this tutorial: http://membres-timc.imag.fr/Olivier.Francois/tutoRstructure.pdf
+
+
+![alt_txt][CHS.cross.entropy]
+[CHS.cross.entropy]:https://cloud.githubusercontent.com/assets/12142475/15485192/c477305c-20f2-11e6-9994-e27f5b04281e.png
+
+
+And the TESS3 Figure for K=2: 
+
+![alt_txt][CHS.K2]
+[CHS.K2]:https://cloud.githubusercontent.com/assets/12142475/15485345/83e9be1e-20f3-11e6-9f0b-90b4679709a2.png
+
+
+Get ascii file from: 
+
+http://srtm.csi.cgiar.org/SELECTION/inputCoord.asp
+
+**If the code below is used, the ascii file headers all need to be changed to caps for the script to work. 
+
+Using the following code for the plot: 
+
+http://membres-timc.imag.fr/Olivier.Francois/TESS_Plot.html
+
+
+
+
+
+```
+####################################
+######Graph of cross-entropy scores
+
+setwd("/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS")
+library(ggplot2)
+
+CHS.entropy <- read.csv("Cross-entropy.scores.CHS.Brown.csv")
+CHS.entropy <- as.data.frame(CHS.entropy)
+CHS.entropy
+
+ggplot(CHS.entropy, aes(x=CHS.entropy$K, y=CHS.entropy$Cross.entropy)) + geom_point(shape=1) + ggtitle("Cross-entropy for CHS subset") + ylab("Cross-entropy") + xlab("K")
+
+
+
+###Graphic display of TESS output
+#########
+setwd("/Users/alexjvr/2016RADAnalysis/1_Phylo/TESS")
+
+install.packages("fields")
+install.packages("RColorBrewer")
+source("MapDisplay/POPSutilities.R")
+
+Qmatrix <- read.table("CH.230.Phylo.FINAL.3.Q")
+coords <- read.table("CH.230.new.coords")
+plot(coords, pch = 19, xlab = "Longitude", ylab= "Latitude")
+#?map
+map(add = T, boundary = T, interior = T, col = "grey80")
+
+asc.raster=("srtm_38_02.asc")
+asc.raster
+grid=createGridFromAsciiRaster(asc.raster)
+constraints=getConstraintsFromAsciiRaster(asc.raster,cell_value_min=0)   ##constrains the map to the raster file size
+maps(matrix = Qmatrix, coords, grid, method = "max", main = "Ancestry coefficients", xlab = "Longitude", ylab = "Latitude")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###With the old dataset (i.e. multiple SNPs per locus)
 
 Structure is running on the GDC server (GDCsrv1 & 2) and on my computer. 
 
