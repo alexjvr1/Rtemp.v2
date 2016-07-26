@@ -338,6 +338,13 @@ x.gid <- df2genind(x, sep = "/", ploidy = 2)
 
 #2. Population structure
 
+Paper reviewing the different pop structure algorithms: 
+
+https://investigativegenetics.biomedcentral.com/articles/10.1186/s13323-015-0019-x
+
+
+
+
 ###Non-geographic
 	
 	Model-based
@@ -456,6 +463,15 @@ Final dataset
 
 ###1. fastStructure
 
+Information here: 
+
+https://rajanil.github.io/fastStructure/
+
+http://phylobotanist.blogspot.co.uk/2014/08/trying-to-use-faststructure.html
+
+
+###Run fastStructure
+
 Convert input to Structure format using pgdSpider. Choose the specific fastStructure format. And change marker type to SNPs. Everything else should be left as is. All the columns are in the PLINK files. 
 
 
@@ -465,7 +481,22 @@ fastStructure can be run from the Applications folder, or specify the path in ba
 python structure.py -K 4 --format=str --input=CH.230.2729 --output=CH23.2729/CH.230.2729_K4.2
 ```
 
-I haven't figured out how to write a script to loop through fastStructure, but change the output file for each run. I.e. I have to manually run K 1-5 x 10 runs. The runs take just a few seconds each. 
+I haven't figured out how to write a script to loop through fastStructure, but change the output file for each run. I.e. I have to manually run K 1-10 x 10 runs. According to the google group, this is how it has to be done. 
+The runs take just a few seconds each. 
+
+
+
+###Assessing K:
+
+```
+python chooseK.py --input=prefix_for_all_K_runs
+```
+And then in stead of choosing the most likely K as before in Structure, use CLUMPP to average over all the iterations for the most likely K. 
+
+
+####CLUMPP
+
+http://web.stanford.edu/group/rosenberglab/papers/clumppNote.pdf
 
 
 
