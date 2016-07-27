@@ -512,6 +512,16 @@ And then in stead of choosing the most likely K as before in Structure, use CLUM
 http://web.stanford.edu/group/rosenberglab/papers/clumppNote.pdf
 
 
+After speaking with Tim, I've decided to use only the EAST populations for the Genomic cline analysis. I don't need to include samples across the whole range. 
+
+So I will rerun fastStructure and TESS using the 118 individuals from EAST. 
+
+Dataset 1: 
+
+
+
+
+
 
 
 ##PCA
