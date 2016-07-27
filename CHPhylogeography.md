@@ -489,8 +489,21 @@ The runs take just a few seconds each.
 ###Assessing K:
 
 ```
-python chooseK.py --input=prefix_for_all_K_runs
+python chooseK.py --input=CH23.2729/CH.230.2729_K*
+
+
+Model complexity that maximizes marginal likelihood = 2
+
+Model components used to explain structure in data = 6
 ```
+
+chooseK.py gives a range of best K, rather than an optimal K. So this is not very useful for me!!
+
+https://groups.google.com/forum/#!topic/structure-software/s_rc_ueq6CU
+
+Google groups suggests comparing plots for all optimal K, here K2-6!! 
+
+
 And then in stead of choosing the most likely K as before in Structure, use CLUMPP to average over all the iterations for the most likely K. 
 
 
@@ -629,6 +642,16 @@ I need to use LEA to convert my data into TESS3 format:
 For this I had to upgrade R. The following link shows how to set up R-studio to use different versions of R: 
 
 https://support.rstudio.com/hc/en-us/articles/200486138-Using-Different-Versions-of-R
+
+In command line: 
+
+```
+export RSTUDIO_WHICH_R=/usr/local/bin/R
+
+open -a rstudio
+```
+
+Make sure that R3.2.5 is launched. 
 
 LEA is a bioconductor package. 
 
