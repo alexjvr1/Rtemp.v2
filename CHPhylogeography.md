@@ -1,4 +1,7 @@
-#Secondary contact across the Alps
+# Secondary contact across the Alps
+
+
+
 
 I spoke to Ben Wielstra today (27 April 2016). He suggests that adding some of the RAD data to the phylgeography paper would be good for several reasons: 
 - it would make the paper better & more interesting
@@ -42,7 +45,7 @@ Using the combination,
 
 To explore this option, I will test the ddRAD data for these popuations: 
 
-#ddRAD dataset: 
+# ddRAD dataset: 
 
 All samples sequenced for cytb for which I have ddRAD data. = 230 individuals.
 
@@ -122,7 +125,7 @@ I'll create 2 datasets:
 
 
 
-##Dataset
+## Dataset
 
 This part is done on the gdc server: /gdc_home4/alexjvr/CHcomplete/outfiles_1029/Phylogeography
 
@@ -142,6 +145,7 @@ First I need to extract the populations from the VCF data set. But the vcf file 
 Vcftools is useful for subsetting a vcf file: 
 
 This took a long time to run! - 32min on gdcsrv2
+
 ```
 vcftools --vcf CH_6.100.vcf --keep PhyloNames.txt --recode --out CH.Phylo.vcf
 
@@ -205,9 +209,7 @@ EOF
 
 Output: 
 
-![alt_txt][Fig1]
-[Fig1]:https://cloud.githubusercontent.com/assets/12142475/14905048/1814df06-0d62-11e6-9b86-d63c149b44ad.png
-
+![Fig1](https://cloud.githubusercontent.com/assets/12142475/14905048/1814df06-0d62-11e6-9b86-d63c149b44ad.png)
 
 Most of the samples have <50% missing data. 
 
